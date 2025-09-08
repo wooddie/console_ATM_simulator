@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "string"
 #include "iostream"
+#include "readWriteLog.hpp"
 
 class bank_acc {
 public:
@@ -20,15 +21,18 @@ public:
     double return_accaunt() const { return accaunt; };
     
     void deposit(double amount) {
-        if(amount > 0) {
+        if (amount > 0) {
             accaunt += amount;
+            list[card_num] = accaunt;  // ✅ синхронизируем "базу"
         }
+        std::cout << "Deposit successful!" << std::endl;
         std::cout << "Current balance: " << return_accaunt() << std::endl;
     }
     
     bool withdraw(double amount) {
         if (amount > 0 && accaunt >= amount) {
             accaunt -= amount;
+            list[card_num] = accaunt;
             return true;
         }
         return false;
